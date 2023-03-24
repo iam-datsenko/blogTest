@@ -18,7 +18,7 @@ const HomeScreen = () => {
     usePosts();
 
   const renderLoader = () => {
-    return (
+    return isLoading ? (
       <View style={styles.container}>
         <ActivityIndicator
           size="large"
@@ -26,7 +26,7 @@ const HomeScreen = () => {
           style={styles.loader}
         />
       </View>
-    );
+    ) : null;
   };
 
   if (isLoading) {
@@ -84,16 +84,16 @@ const styles = StyleSheet.create({
   listContainer: {
     zIndex: 0,
   },
+  loader: {
+    marginVertical: 24,
+    alignItems: 'center',
+  },
   header: {
     paddingTop: 40,
     paddingBottom: 20,
     color: colors.white,
     fontSize: 24,
     fontWeight: 'bold',
-  },
-  loader: {
-    marginVertical: 24,
-    alignItems: 'center',
   },
 });
 

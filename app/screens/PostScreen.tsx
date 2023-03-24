@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   ScrollView,
   Text,
@@ -12,16 +12,33 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import {colors} from '../config';
 import {getGMTDate} from '../helpers';
+import ApiSDK from '../api/posts';
+import {Post} from '../types';
 
 const PostScreen = ({route}: any) => {
+  const [postData, setPostData] = useState<Post>();
+
   const {data} = route.params;
   const source = {html: data.content.rendered};
   const {width, scale} = useWindowDimensions();
   const GMTDate = getGMTDate(data.date_gmt);
+  const scalable = `${postData?.featured_image}?width=${width * scale}`;
 
-  if (!data) {
-    return null;
-  }
+  const getPostData = useCallback(async () => {
+    try {
+      const post = await ApiSDK.getPost(data.id);
+
+      setPostData(post);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [data.id]);
+
+  console.log(scalable);
+
+  useEffect(() => {
+    getPostData();
+  }, [getPostData]);
 
   return (
     <>
@@ -36,22 +53,21 @@ const PostScreen = ({route}: any) => {
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.date}>
-            Автор: {data.yoast_head_json.author} | Дата публикації: {GMTDate}
+            Автор: {postData?.yoast_head_json.author} | Дата публикації:{' '}
+            {GMTDate}
           </Text>
 
-          <Text style={styles.title}>{data.yoast_head_json.og_title}</Text>
+          <Text style={styles.title}>{postData?.yoast_head_json.og_title}</Text>
 
           <Text style={styles.description}>
-            {data.yoast_head_json.og_description}
+            {postData?.yoast_head_json.og_description}
           </Text>
 
           <View style={styles.containerImage}>
             <Image
               resizeMode="contain"
               source={{
-                uri:
-                  data.yoast_head_json?.og_image[0].url +
-                  `?width=${width * scale}`,
+                uri: scalable,
               }}
               style={styles.image}
             />

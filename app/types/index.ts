@@ -21,3 +21,7 @@ export type RootStackParamList = {
   Post: {data: Post | null};
   Home: undefined;
 };
+
+export type Params = {
+  page?: number;
+};

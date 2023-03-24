@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import {getBlogData} from '../api/posts';
+import ApiSDK from '../api/posts';
 import {Post} from '../types';
 
 export const usePosts = () => {
@@ -8,20 +8,18 @@ export const usePosts = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  console.log(page);
+  // console.log(blogData[0]?.slug);
 
   useEffect(() => {
-    let active = true;
-
     const getData = async () => {
       setIsLoading(true);
 
       try {
-        if (active) {
-          const data = await getBlogData(page);
-          setBlogData(prevData => [...prevData, ...data]);
-          // setBlogData([...blogData, ...data]);
-        }
+        console.log(page);
+
+        const data = await ApiSDK.getPosts(page);
+        // setBlogData(prevData => [...prevData, ...data]);
+        setBlogData(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -30,30 +28,27 @@ export const usePosts = () => {
     };
 
     getData();
-
-    return () => {
-      active = false;
-    };
   }, [page]);
 
   const loadMoreData = useCallback(() => {
-    if (!isLoading) {
-      setPage(page + 1);
-    }
-  }, [isLoading, page]);
+    setPage(page + 1);
+  }, [page]);
 
   const refreshData = useCallback(async () => {
+    setBlogData([]);
+    setPage(2);
+
     try {
       setIsRefreshing(true);
 
-      const data = await getBlogData(1);
+      const data = await ApiSDK.getPosts(page);
       setBlogData(data);
     } catch (error) {
       console.log(error);
     } finally {
       setIsRefreshing(false);
     }
-  }, []);
+  }, [page]);
 
   return {blogData, isLoading, isRefreshing, loadMoreData, refreshData};
 };

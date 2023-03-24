@@ -1,9 +1,49 @@
-const BASE_URL = 'https://umtalelab.com/wp-json';
+import {BASE_URL} from '@env';
 
-export const getBlogData = async (page: number) => {
-  const url = `${BASE_URL}/wp/v2/posts/?page=${page}`;
+import {Post} from '../types';
 
-  const response = await fetch(url);
+class ApiSDK {
+  static getPosts(page: number) {
+    return this.get<Post[]>('/posts/', {page});
+  }
 
-  return response.json();
-};
+  static getPost(id: number) {
+    return this.get<Post>(`/posts/${id}`);
+  }
+
+  static get<T = any>(
+    endpoint: string,
+    params?: Record<string, string | number | Array<string>>,
+  ): Promise<T> {
+    return this.request(endpoint, 'GET', {...params});
+  }
+
+  static async request(
+    endpoint: string,
+    method: string,
+    params?: Record<string, string | number | Array<string>>,
+  ) {
+    const url = new URL(`${BASE_URL}${endpoint}`);
+    let options = {
+      method,
+    };
+
+    if (params && method.toUpperCase() === 'GET') {
+      Object.keys(params).forEach(param => {
+        let value = params[param];
+
+        url.searchParams.append(params, value.toString());
+      });
+    }
+
+    try {
+      const res = await fetch(url.href, options);
+
+      return await res.json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export default ApiSDK;

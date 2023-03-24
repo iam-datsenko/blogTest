@@ -6,6 +6,7 @@ import {StatusBar, View} from 'react-native';
 
 import HomeScreen from './app/screens/HomeScreen';
 import PostScreen from './app/screens/PostScreen';
+import AuthScreen from './app/screens/AuthScreen';
 import Header from './app/components/Header';
 import {colors} from './app/config';
 
@@ -17,7 +18,7 @@ function App(): JSX.Element {
       <StatusBar barStyle="light-content" />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Home"
+          initialRouteName="Auth"
           screenOptions={{
             headerTitle: () => <Header />,
             headerTitleAlign: 'left',
@@ -27,7 +28,14 @@ function App(): JSX.Element {
             },
             headerShadowVisible: false,
           }}>
-          <Stack.Screen component={HomeScreen} name="Home" />
+          <Stack.Screen component={AuthScreen} name="Auth" />
+          <Stack.Screen
+            component={HomeScreen}
+            name="Home"
+            options={{
+              headerLeft: () => <View />,
+            }}
+          />
           <Stack.Screen
             component={PostScreen}
             name="Post"
