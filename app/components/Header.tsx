@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
     height: 80,
     marginBottom: 5,
   },
+  icon: {
+    alignSelf: 'center',
+  },
 });
 
 export default Header;

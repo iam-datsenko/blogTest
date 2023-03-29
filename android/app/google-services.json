@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "194936597024-qmofabeou0j699fo4gbkf1qe1qb8ec84.apps.googleusercontent.com",
+          "client_id": "194936597024-tvfu87gcjrj128n0l56th953e2hujjpj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blog",
+            "certificate_hash": "70d858b18acf07e9b893453ed9ee72902b84d376"
+          }
+        },
+        {
+          "client_id": "194936597024-qk9srabsm107j25481vdjskogk3cnj3b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "194936597024-qmofabeou0j699fo4gbkf1qe1qb8ec84.apps.googleusercontent.com",
+              "client_id": "194936597024-qk9srabsm107j25481vdjskogk3cnj3b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "194936597024-8itnpd52947dfvv13rcsmaqmn3eevta0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.blog"
+              }
             }
           ]
         }

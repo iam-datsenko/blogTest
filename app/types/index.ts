@@ -25,3 +25,16 @@ export type RootStackParamList = {
 export type Params = {
   page?: number;
 };
+
+export type User = {
+  name: string | null | undefined;
+  id: string | null | undefined;
+  email: string | null | undefined;
+};
+
+export type Context = {
+  user: User | undefined;
+  setUser: (user: User) => void;
+  signInGoogle: () => void;
+  signInFacebook: () => void;
+};

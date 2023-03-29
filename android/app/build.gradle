@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: 'com.google.gms.google-services'
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
 
@@ -151,6 +152,9 @@ android {
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
+    implementation project(':react-native-fbsdk-next')
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    
     implementation("com.facebook.react:react-android")
     
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
